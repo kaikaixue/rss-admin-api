@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.SysAppUserMapper">
+    
+    <resultMap type="SysAppUser" id="SysAppUserResult">
+        <result property="userId"    column="user_id"    />
+        <result property="username"    column="username"    />
+        <result property="email"    column="email"    />
+        <result property="avatar"    column="avatar"    />
+        <result property="phone"    column="phone"    />
+        <result property="passwordHash"    column="password_hash"    />
+        <result property="createdAt"    column="created_at"    />
+        <result property="updatedAt"    column="updated_at"    />
+    </resultMap>
+
+    <sql id="selectSysAppUserVo">
+        select user_id, username, email, avatar, phone, password_hash, created_at, updated_at from sys_app_user
+    </sql>
+
+    <select id="selectSysAppUserList" parameterType="SysAppUser" resultMap="SysAppUserResult">
+        <include refid="selectSysAppUserVo"/>
+        <where>  
+            <if test="username != null  and username != ''"> and username like concat('%', #{username}, '%')</if>
+            <if test="email != null  and email != ''"> and email = #{email}</if>
+            <if test="avatar != null  and avatar != ''"> and avatar = #{avatar}</if>
+            <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
+            <if test="passwordHash != null  and passwordHash != ''"> and password_hash = #{passwordHash}</if>
+            <if test="createdAt != null "> and created_at = #{createdAt}</if>
+            <if test="updatedAt != null "> and updated_at = #{updatedAt}</if>
+        </where>
+    </select>
+    
+    <select id="selectSysAppUserByUserId" parameterType="Long" resultMap="SysAppUserResult">
+        <include refid="selectSysAppUserVo"/>
+        where user_id = #{userId}
+    </select>
+
+    <insert id="insertSysAppUser" parameterType="SysAppUser" useGeneratedKeys="true" keyProperty="userId">
+        insert into sys_app_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="username != null and username != ''">username,</if>
+            <if test="email != null and email != ''">email,</if>
+            <if test="avatar != null and avatar != ''">avatar,</if>
+            <if test="phone != null and phone != ''">phone,</if>
+            <if test="passwordHash != null and passwordHash != ''">password_hash,</if>
+            <if test="createdAt != null">created_at,</if>
+            <if test="updatedAt != null">updated_at,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="username != null and username != ''">#{username},</if>
+            <if test="email != null and email != ''">#{email},</if>
+            <if test="avatar != null and avatar != ''">#{avatar},</if>
+            <if test="phone != null and phone != ''">#{phone},</if>
+            <if test="passwordHash != null and passwordHash != ''">#{passwordHash},</if>
+            <if test="createdAt != null">#{createdAt},</if>
+            <if test="updatedAt != null">#{updatedAt},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSysAppUser" parameterType="SysAppUser">
+        update sys_app_user
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="username != null and username != ''">username = #{username},</if>
+            <if test="email != null and email != ''">email = #{email},</if>
+            <if test="avatar != null and avatar != ''">avatar = #{avatar},</if>
+            <if test="phone != null and phone != ''">phone = #{phone},</if>
+            <if test="passwordHash != null and passwordHash != ''">password_hash = #{passwordHash},</if>
+            <if test="createdAt != null">created_at = #{createdAt},</if>
+            <if test="updatedAt != null">updated_at = #{updatedAt},</if>
+        </trim>
+        where user_id = #{userId}
+    </update>
+
+    <delete id="deleteSysAppUserByUserId" parameterType="Long">
+        delete from sys_app_user where user_id = #{userId}
+    </delete>
+
+    <delete id="deleteSysAppUserByUserIds" parameterType="String">
+        delete from sys_app_user where user_id in 
+        <foreach item="userId" collection="array" open="(" separator="," close=")">
+            #{userId}
+        </foreach>
+    </delete>
+</mapper>

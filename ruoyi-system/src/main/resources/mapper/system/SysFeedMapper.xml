@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.SysFeedMapper">
+    
+    <resultMap type="SysFeed" id="SysFeedResult">
+        <result property="feedId"    column="feed_id"    />
+        <result property="feedUrl"    column="feed_url"    />
+        <result property="feedTitle"    column="feed_title"    />
+        <result property="feedDescription"    column="feed_description"    />
+        <result property="feedLogo"    column="feed_logo"    />
+        <result property="createdAt"    column="created_at"    />
+        <result property="updatedAt"    column="updated_at"    />
+        <result property="isRecommended"    column="is_recommended"    />
+    </resultMap>
+
+    <sql id="selectSysFeedVo">
+        select feed_id, feed_url, feed_title, feed_description, feed_logo, created_at, updated_at, is_recommended from sys_feed
+    </sql>
+
+    <select id="selectSysFeedList" parameterType="SysFeed" resultMap="SysFeedResult">
+        <include refid="selectSysFeedVo"/>
+        <where>  
+            <if test="feedUrl != null  and feedUrl != ''"> and feed_url = #{feedUrl}</if>
+            <if test="feedTitle != null  and feedTitle != ''"> and feed_title = #{feedTitle}</if>
+            <if test="feedDescription != null  and feedDescription != ''"> and feed_description = #{feedDescription}</if>
+            <if test="feedLogo != null  and feedLogo != ''"> and feed_logo = #{feedLogo}</if>
+            <if test="createdAt != null "> and created_at = #{createdAt}</if>
+            <if test="updatedAt != null "> and updated_at = #{updatedAt}</if>
+            <if test="isRecommended != null "> and is_recommended = #{isRecommended}</if>
+        </where>
+    </select>
+    
+    <select id="selectSysFeedByFeedId" parameterType="Long" resultMap="SysFeedResult">
+        <include refid="selectSysFeedVo"/>
+        where feed_id = #{feedId}
+    </select>
+
+    <insert id="insertSysFeed" parameterType="SysFeed" useGeneratedKeys="true" keyProperty="feedId">
+        insert into sys_feed
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="feedUrl != null and feedUrl != ''">feed_url,</if>
+            <if test="feedTitle != null">feed_title,</if>
+            <if test="feedDescription != null">feed_description,</if>
+            <if test="feedLogo != null">feed_logo,</if>
+            <if test="createdAt != null">created_at,</if>
+            <if test="updatedAt != null">updated_at,</if>
+            <if test="isRecommended != null">is_recommended,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="feedUrl != null and feedUrl != ''">#{feedUrl},</if>
+            <if test="feedTitle != null">#{feedTitle},</if>
+            <if test="feedDescription != null">#{feedDescription},</if>
+            <if test="feedLogo != null">#{feedLogo},</if>
+            <if test="createdAt != null">#{createdAt},</if>
+            <if test="updatedAt != null">#{updatedAt},</if>
+            <if test="isRecommended != null">#{isRecommended},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSysFeed" parameterType="SysFeed">
+        update sys_feed
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="feedUrl != null and feedUrl != ''">feed_url = #{feedUrl},</if>
+            <if test="feedTitle != null">feed_title = #{feedTitle},</if>
+            <if test="feedDescription != null">feed_description = #{feedDescription},</if>
+            <if test="feedLogo != null">feed_logo = #{feedLogo},</if>
+            <if test="createdAt != null">created_at = #{createdAt},</if>
+            <if test="updatedAt != null">updated_at = #{updatedAt},</if>
+            <if test="isRecommended != null">is_recommended = #{isRecommended},</if>
+        </trim>
+        where feed_id = #{feedId}
+    </update>
+
+    <delete id="deleteSysFeedByFeedId" parameterType="Long">
+        delete from sys_feed where feed_id = #{feedId}
+    </delete>
+
+    <delete id="deleteSysFeedByFeedIds" parameterType="String">
+        delete from sys_feed where feed_id in 
+        <foreach item="feedId" collection="array" open="(" separator="," close=")">
+            #{feedId}
+        </foreach>
+    </delete>
+</mapper>
