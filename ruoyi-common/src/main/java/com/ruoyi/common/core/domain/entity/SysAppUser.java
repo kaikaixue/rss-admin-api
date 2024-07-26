@@ -1,7 +1,13 @@
-package com.ruoyi.system.domain;
+package com.ruoyi.common.core.domain.entity;
 
 import java.util.Date;
+
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Builder;
+import lombok.Data;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
@@ -13,39 +19,44 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * @author ruoyi
  * @date 2024-07-24
  */
-public class SysAppUser extends BaseEntity
+@Data
+@Builder
+public class SysAppUser
 {
     private static final long serialVersionUID = 1L;
 
     /** $column.columnComment */
+    @TableId
     private Long userId;
 
     /** $column.columnComment */
-    @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
+    @Excel(name = "用户名", readConverterExp = "$column.readConverterExp()")
     private String username;
 
     /** $column.columnComment */
-    @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
+    @Excel(name = "电子邮件", readConverterExp = "$column.readConverterExp()")
     private String email;
 
     /** $column.columnComment */
-    @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
+    @Excel(name = "头像", readConverterExp = "$column.readConverterExp()")
     private String avatar;
 
     /** $column.columnComment */
-    @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
+    @Excel(name = "手机号", readConverterExp = "$column.readConverterExp()")
     private String phone;
 
     /** $column.columnComment */
-    @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
+    @Excel(name = "密码", readConverterExp = "$column.readConverterExp()")
     private String passwordHash;
 
     /** $column.columnComment */
-    @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
+    @TableField(fill = FieldFill.INSERT)
+    @Excel(name = "创建时间", readConverterExp = "$column.readConverterExp()")
     private Date createdAt;
 
     /** $column.columnComment */
-    @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
+    @TableField(fill = FieldFill.UPDATE)
+    @Excel(name = "更新时间", readConverterExp = "$column.readConverterExp()")
     private Date updatedAt;
 
     public void setUserId(Long userId) 

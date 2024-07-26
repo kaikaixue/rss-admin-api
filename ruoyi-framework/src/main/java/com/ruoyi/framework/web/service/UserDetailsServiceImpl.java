@@ -1,5 +1,10 @@
 package com.ruoyi.framework.web.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.ruoyi.common.core.domain.entity.SysAppUser;
+import com.ruoyi.common.core.domain.model.AppLoginUser;
+import com.ruoyi.system.mapper.SysAppUserMapper;
+import com.ruoyi.system.service.ISysAppUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +20,8 @@ import com.ruoyi.common.utils.MessageUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.system.service.ISysUserService;
 
+import javax.annotation.Resource;
+
 /**
  * 用户验证处理
  *
@@ -27,12 +34,30 @@ public class UserDetailsServiceImpl implements UserDetailsService
 
     @Autowired
     private ISysUserService userService;
+
+    @Resource
+    private SysAppUserMapper sysAppUserMapper;
     
     @Autowired
     private SysPasswordService passwordService;
 
     @Autowired
     private SysPermissionService permissionService;
+    public UserDetails appLoadUserByUsername(String username) throws UsernameNotFoundException
+    {
+        QueryWrapper<SysAppUser> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("username", username);
+        SysAppUser appUser = sysAppUserMapper.selectOne(queryWrapper);
+        if (StringUtils.isNull(appUser))
+        {
+            log.info("登录用户：{} 不存在.", username);
+            throw new ServiceException(MessageUtils.message("user.not.exists"));
+        }
+
+        passwordService.appValidate(appUser);
+
+        return createAppLoginUser(appUser);
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
@@ -57,6 +82,11 @@ public class UserDetailsServiceImpl implements UserDetailsService
         passwordService.validate(user);
 
         return createLoginUser(user);
+    }
+
+    public UserDetails createAppLoginUser(SysAppUser user)
+    {
+        return new AppLoginUser(user.getUserId(), user);
     }
 
     public UserDetails createLoginUser(SysUser user)

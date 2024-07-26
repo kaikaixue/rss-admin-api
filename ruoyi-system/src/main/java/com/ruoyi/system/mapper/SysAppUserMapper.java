@@ -1,7 +1,9 @@
 package com.ruoyi.system.mapper;
 
 import java.util.List;
-import com.ruoyi.system.domain.SysAppUser;
+
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.ruoyi.common.core.domain.entity.SysAppUser;
 
 /**
  * 【请填写功能名称】Mapper接口
@@ -9,7 +11,7 @@ import com.ruoyi.system.domain.SysAppUser;
  * @author ruoyi
  * @date 2024-07-24
  */
-public interface SysAppUserMapper 
+public interface SysAppUserMapper extends BaseMapper<SysAppUser>
 {
     /**
      * 查询【请填写功能名称】

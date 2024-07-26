@@ -1,11 +1,15 @@
 package com.ruoyi.system.service.impl;
 
 import java.util.List;
+
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.system.mapper.SysAppUserMapper;
-import com.ruoyi.system.domain.SysAppUser;
+import com.ruoyi.common.core.domain.entity.SysAppUser;
 import com.ruoyi.system.service.ISysAppUserService;
+
+import javax.annotation.Resource;
 
 /**
  * 【请填写功能名称】Service业务层处理
@@ -14,9 +18,9 @@ import com.ruoyi.system.service.ISysAppUserService;
  * @date 2024-07-24
  */
 @Service
-public class SysAppUserServiceImpl implements ISysAppUserService 
+public class SysAppUserServiceImpl extends ServiceImpl<SysAppUserMapper, SysAppUser> implements ISysAppUserService
 {
-    @Autowired
+    @Resource
     private SysAppUserMapper sysAppUserMapper;
 
     /**
