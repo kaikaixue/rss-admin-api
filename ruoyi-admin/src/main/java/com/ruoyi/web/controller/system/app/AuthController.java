@@ -38,10 +38,9 @@ public class AuthController extends BaseController {
 
     @PostMapping("/login")
     public AjaxResult login(@RequestBody LoginDTO loginDTO) {
+        Map<String, Object> map;
         // 生成令牌
-        String token = appAuthService.login(loginDTO.getUsername(), loginDTO.getPassword());
-        Map<String, String> map = new HashMap<>();
-        map.put(Constants.TOKEN, token);
+        map = appAuthService.login(loginDTO.getUsername(), loginDTO.getPassword());
         return success(map);
     }
 }

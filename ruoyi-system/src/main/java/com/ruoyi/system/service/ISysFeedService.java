@@ -11,6 +11,9 @@ import com.ruoyi.system.domain.SysFeed;
  */
 public interface ISysFeedService 
 {
+
+    SysFeed analysisByUrl(String url);
+
     /**
      * 查询订阅源
      * 

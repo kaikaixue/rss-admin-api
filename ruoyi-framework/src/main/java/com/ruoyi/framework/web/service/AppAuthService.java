@@ -26,6 +26,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class AppAuthService extends ServiceImpl<SysAppUserMapper, SysAppUser> {
@@ -58,7 +60,7 @@ public class AppAuthService extends ServiceImpl<SysAppUserMapper, SysAppUser> {
         return !StringUtils.isNotNull(user);
     }
 
-    public String login(String username, String password) {
+    public Map<String, Object> login(String username, String password) {
         // 登录前置校验
         loginPreCheck(username, password);
         // 用户认证
@@ -81,7 +83,10 @@ public class AppAuthService extends ServiceImpl<SysAppUserMapper, SysAppUser> {
         }
         AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success")));
         AppLoginUser appLoginUser = (AppLoginUser) authentication.getPrincipal();
-        return appTokenService.createToken(appLoginUser);
+        Map<String, Object> map = new HashMap<>();
+        map.put("userInfo", appLoginUser.getUser());
+        map.put("token", appTokenService.createToken(appLoginUser));
+        return map;
     }
 
     public void loginPreCheck(String username, String password) {

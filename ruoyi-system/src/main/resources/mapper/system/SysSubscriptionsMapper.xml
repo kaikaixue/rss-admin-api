@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.SysSubscriptionsMapper">
+    
+    <resultMap type="SysSubscriptions" id="SysSubscriptionsResult">
+        <result property="subscriptionId"    column="subscription_id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="feedId"    column="feed_id"    />
+        <result property="createdAt"    column="created_at"    />
+        <result property="updatedAt"    column="updated_at"    />
+    </resultMap>
+
+    <sql id="selectSysSubscriptionsVo">
+        select subscription_id, user_id, feed_id, created_at, updated_at from sys_subscriptions
+    </sql>
+
+    <select id="selectSysSubscriptionsList" parameterType="SysSubscriptions" resultMap="SysSubscriptionsResult">
+        <include refid="selectSysSubscriptionsVo"/>
+        <where>  
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="feedId != null "> and feed_id = #{feedId}</if>
+            <if test="createdAt != null "> and created_at = #{createdAt}</if>
+            <if test="updatedAt != null "> and updated_at = #{updatedAt}</if>
+        </where>
+    </select>
+    
+    <select id="selectSysSubscriptionsBySubscriptionId" parameterType="Long" resultMap="SysSubscriptionsResult">
+        <include refid="selectSysSubscriptionsVo"/>
+        where subscription_id = #{subscriptionId}
+    </select>
+
+    <insert id="insertSysSubscriptions" parameterType="SysSubscriptions">
+        insert into sys_subscriptions
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="subscriptionId != null">subscription_id,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="feedId != null">feed_id,</if>
+            <if test="createdAt != null">created_at,</if>
+            <if test="updatedAt != null">updated_at,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="subscriptionId != null">#{subscriptionId},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="feedId != null">#{feedId},</if>
+            <if test="createdAt != null">#{createdAt},</if>
+            <if test="updatedAt != null">#{updatedAt},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSysSubscriptions" parameterType="SysSubscriptions">
+        update sys_subscriptions
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="feedId != null">feed_id = #{feedId},</if>
+            <if test="createdAt != null">created_at = #{createdAt},</if>
+            <if test="updatedAt != null">updated_at = #{updatedAt},</if>
+        </trim>
+        where subscription_id = #{subscriptionId}
+    </update>
+
+    <delete id="deleteSysSubscriptionsBySubscriptionId" parameterType="Long">
+        delete from sys_subscriptions where subscription_id = #{subscriptionId}
+    </delete>
+
+    <delete id="deleteSysSubscriptionsBySubscriptionIds" parameterType="String">
+        delete from sys_subscriptions where subscription_id in 
+        <foreach item="subscriptionId" collection="array" open="(" separator="," close=")">
+            #{subscriptionId}
+        </foreach>
+    </delete>
+</mapper>
