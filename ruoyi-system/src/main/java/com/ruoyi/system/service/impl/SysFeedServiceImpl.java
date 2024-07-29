@@ -1,14 +1,9 @@
 package com.ruoyi.system.service.impl;
 
-import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.List;
-import java.util.Objects;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.system.mapper.SysFeedMapper;
 import com.ruoyi.system.domain.SysFeed;
@@ -19,14 +14,12 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 /**
  * 订阅源Service业务层处理
  * 
  * @author ruoyi
- * @date 2024-07-24
+ *  2024-07-24
  */
 @Service
 public class SysFeedServiceImpl implements ISysFeedService 
