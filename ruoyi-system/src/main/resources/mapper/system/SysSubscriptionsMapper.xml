@@ -34,18 +34,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <insert id="insertSysSubscriptions" parameterType="SysSubscriptions">
         insert into sys_subscriptions
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="subscriptionId != null">subscription_id,</if>
             <if test="userId != null">user_id,</if>
             <if test="feedId != null">feed_id,</if>
-            <if test="createdAt != null">created_at,</if>
-            <if test="updatedAt != null">updated_at,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="subscriptionId != null">#{subscriptionId},</if>
             <if test="userId != null">#{userId},</if>
             <if test="feedId != null">#{feedId},</if>
-            <if test="createdAt != null">#{createdAt},</if>
-            <if test="updatedAt != null">#{updatedAt},</if>
          </trim>
     </insert>
 

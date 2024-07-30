@@ -1,6 +1,12 @@
 package com.ruoyi.system.domain;
 
+import java.io.Serializable;
 import java.util.Date;
+
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -13,12 +19,17 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * @author ruoyi
  * @date 2024-07-24
  */
-public class SysFeed extends BaseEntity
+@TableName("sys_feed")
+public class SysFeed implements Serializable
 {
     private static final long serialVersionUID = 1L;
 
     /** 订阅源ID（主键） */
+    @TableId
     private Long feedId;
+
+    @Excel(name = "订阅源链接")
+    private String feedLink;
 
     /** 订阅源URL */
     @Excel(name = "订阅源URL")
@@ -38,11 +49,13 @@ public class SysFeed extends BaseEntity
 
     /** 创建时间 */
     @JsonFormat(pattern = "yyyy-MM-dd")
+    @TableField(fill = FieldFill.INSERT)
     @Excel(name = "创建时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date createdAt;
 
     /** 更新时间 */
     @JsonFormat(pattern = "yyyy-MM-dd")
+    @TableField(fill = FieldFill.UPDATE)
     @Excel(name = "更新时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date updatedAt;
 
@@ -67,6 +80,16 @@ public class SysFeed extends BaseEntity
     public String getFeedUrl() 
     {
         return feedUrl;
+    }
+
+    public void setFeedLink(String feedLink)
+    {
+        this.feedLink = feedLink;
+    }
+
+    public String getFeedLink()
+    {
+        return feedLink;
     }
     public void setFeedTitle(String feedTitle) 
     {

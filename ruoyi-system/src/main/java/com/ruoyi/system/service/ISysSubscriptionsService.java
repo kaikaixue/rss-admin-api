@@ -1,6 +1,9 @@
 package com.ruoyi.system.service;
 
 import java.util.List;
+
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.ruoyi.system.domain.SysFeed;
 import com.ruoyi.system.domain.SysSubscriptions;
 
 /**
@@ -9,8 +12,12 @@ import com.ruoyi.system.domain.SysSubscriptions;
  * @author ruoyi
  * @date 2024-07-27
  */
-public interface ISysSubscriptionsService 
+public interface ISysSubscriptionsService extends IService<SysSubscriptions>
 {
+
+
+
+
     /**
      * 查询订阅关系
      * 

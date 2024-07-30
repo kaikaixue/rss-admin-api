@@ -3,6 +3,8 @@ package com.ruoyi.common.utils;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import com.ruoyi.common.core.domain.model.AppLoginUser;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -74,6 +76,21 @@ public class SecurityUtils
         try
         {
             return (LoginUser) getAuthentication().getPrincipal();
+        }
+        catch (Exception e)
+        {
+            throw new ServiceException("获取用户信息异常", HttpStatus.UNAUTHORIZED);
+        }
+    }
+
+    /**
+     * 获取用户
+     **/
+    public static AppLoginUser getAppLoginUser()
+    {
+        try
+        {
+            return (AppLoginUser) getAuthentication().getPrincipal();
         }
         catch (Exception e)
         {

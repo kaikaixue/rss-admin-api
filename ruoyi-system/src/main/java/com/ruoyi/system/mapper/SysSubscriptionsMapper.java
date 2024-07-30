@@ -1,6 +1,8 @@
 package com.ruoyi.system.mapper;
 
 import java.util.List;
+
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.ruoyi.system.domain.SysSubscriptions;
 
 /**
@@ -9,7 +11,7 @@ import com.ruoyi.system.domain.SysSubscriptions;
  * @author ruoyi
  * @date 2024-07-27
  */
-public interface SysSubscriptionsMapper 
+public interface SysSubscriptionsMapper extends BaseMapper<SysSubscriptions>
 {
     /**
      * 查询订阅关系

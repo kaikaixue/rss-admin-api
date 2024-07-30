@@ -1,6 +1,8 @@
 package com.ruoyi.system.mapper;
 
 import java.util.List;
+
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.ruoyi.system.domain.SysFeed;
 
 /**
@@ -9,7 +11,7 @@ import com.ruoyi.system.domain.SysFeed;
  * @author ruoyi
  * @date 2024-07-24
  */
-public interface SysFeedMapper 
+public interface SysFeedMapper extends BaseMapper<SysFeed>
 {
     /**
      * 查询订阅源

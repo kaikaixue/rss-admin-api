@@ -4,6 +4,14 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.List;
+
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.pagehelper.Page;
+import com.ruoyi.common.core.domain.model.AppLoginUser;
+import com.ruoyi.common.utils.SecurityUtils;
+import com.ruoyi.system.domain.SysSubscriptions;
 import org.springframework.stereotype.Service;
 import com.ruoyi.system.mapper.SysFeedMapper;
 import com.ruoyi.system.domain.SysFeed;
@@ -22,14 +30,21 @@ import org.w3c.dom.Element;
  *  2024-07-24
  */
 @Service
-public class SysFeedServiceImpl implements ISysFeedService 
+public class SysFeedServiceImpl extends ServiceImpl<SysFeedMapper, SysFeed> implements ISysFeedService
 {
     @Resource
     private SysFeedMapper sysFeedMapper;
 
     @Override
     public SysFeed analysisByUrl(String url) {
+        QueryWrapper<SysFeed> sysFeedQueryWrapper = new QueryWrapper<>();
+        sysFeedQueryWrapper.eq("feed_link", url);
+        SysFeed oldFeed = sysFeedMapper.selectOne(sysFeedQueryWrapper);
+        if (oldFeed != null) {
+            return oldFeed;
+        }
         SysFeed sysFeed = new SysFeed();
+        SysFeed newFeed = new SysFeed();
         try {
             // 创建URL对象
             URL rssUrl = new URL(url);
@@ -57,13 +72,26 @@ public class SysFeedServiceImpl implements ISysFeedService
             sysFeed.setFeedTitle(title);
             sysFeed.setFeedUrl(link);
             sysFeed.setFeedDescription(description);
+            sysFeed.setFeedLink(url);
             // 关闭输入流
             inputStream.close();
+            save(sysFeed);
+            newFeed = selectSysFeedByFeedId(sysFeed.getFeedId());
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return sysFeed;
+        return newFeed;
     }
+
+    @Override
+    public List<SysFeed> listByPageSubscriptions(Integer page, Integer pageSize) {
+        AppLoginUser appLoginUser = SecurityUtils.getAppLoginUser();
+        Page<SysFeed> rowPage = new Page<>(page, pageSize);
+        LambdaQueryWrapper<SysFeed> queryWrapper = new LambdaQueryWrapper<>();
+//        queryWrapper.eq(SysSubscriptions::getUserId, appLoginUser.getUserId())
+        return null;
+    }
+
 
     /**
      * 查询订阅源

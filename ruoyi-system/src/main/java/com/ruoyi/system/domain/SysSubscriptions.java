@@ -1,6 +1,12 @@
 package com.ruoyi.system.domain;
 
+import java.io.Serializable;
 import java.util.Date;
+
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -13,11 +19,13 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * @author ruoyi
  * @date 2024-07-27
  */
-public class SysSubscriptions extends BaseEntity
+@TableName("sys_subscriptions")
+public class SysSubscriptions implements Serializable
 {
     private static final long serialVersionUID = 1L;
 
     /** 订阅id */
+    @TableId
     private Long subscriptionId;
 
     /** 用户id */
@@ -30,11 +38,13 @@ public class SysSubscriptions extends BaseEntity
 
     /** 订阅创建时间 */
     @JsonFormat(pattern = "yyyy-MM-dd")
+    @TableField(fill = FieldFill.INSERT)
     @Excel(name = "订阅创建时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date createdAt;
 
     /** 订阅更新时间 */
     @JsonFormat(pattern = "yyyy-MM-dd")
+    @TableField(fill = FieldFill.UPDATE)
     @Excel(name = "订阅更新时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date updatedAt;
 

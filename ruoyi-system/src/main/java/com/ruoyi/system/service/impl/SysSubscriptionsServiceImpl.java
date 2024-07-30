@@ -1,11 +1,20 @@
 package com.ruoyi.system.service.impl;
 
 import java.util.List;
+
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.pagehelper.Page;
+import com.ruoyi.system.domain.SysFeed;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import com.ruoyi.system.mapper.SysSubscriptionsMapper;
 import com.ruoyi.system.domain.SysSubscriptions;
 import com.ruoyi.system.service.ISysSubscriptionsService;
+
+import javax.annotation.Resource;
 
 /**
  * 订阅关系Service业务层处理
@@ -14,9 +23,9 @@ import com.ruoyi.system.service.ISysSubscriptionsService;
  * @date 2024-07-27
  */
 @Service
-public class SysSubscriptionsServiceImpl implements ISysSubscriptionsService 
+public class SysSubscriptionsServiceImpl extends ServiceImpl<SysSubscriptionsMapper, SysSubscriptions> implements ISysSubscriptionsService
 {
-    @Autowired
+    @Resource
     private SysSubscriptionsMapper sysSubscriptionsMapper;
 
     /**

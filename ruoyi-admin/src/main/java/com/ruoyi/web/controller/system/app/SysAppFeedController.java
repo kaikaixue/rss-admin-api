@@ -19,6 +19,12 @@ public class SysAppFeedController {
         return success(sysFeedService.analysisByUrl(url));
     }
 
+    @PostMapping("/listPage")
+    public AjaxResult listSubscription(@RequestParam Integer page, Integer pageSize) {
+
+        return success();
+    }
+
     @GetMapping(value = "/hello")
     public AjaxResult hello() {
         return success("hello");

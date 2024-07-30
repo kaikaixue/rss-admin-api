@@ -1,6 +1,8 @@
 package com.ruoyi.system.service;
 
 import java.util.List;
+
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.ruoyi.system.domain.SysFeed;
 
 /**
@@ -9,8 +11,10 @@ import com.ruoyi.system.domain.SysFeed;
  * @author ruoyi
  * @date 2024-07-24
  */
-public interface ISysFeedService 
+public interface ISysFeedService extends IService<SysFeed>
 {
+
+    List<SysFeed> listByPageSubscriptions(Integer page, Integer pageSize);
 
     SysFeed analysisByUrl(String url);
 

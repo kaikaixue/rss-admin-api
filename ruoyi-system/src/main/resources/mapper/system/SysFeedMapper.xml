@@ -16,7 +16,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectSysFeedVo">
-        select feed_id, feed_url, feed_title, feed_description, feed_logo, created_at, updated_at, is_recommended from sys_feed
+        select feed_id,feed_link, feed_url, feed_title, feed_description, feed_logo, created_at, updated_at, is_recommended from sys_feed
     </sql>
 
     <select id="selectSysFeedList" parameterType="SysFeed" resultMap="SysFeedResult">
@@ -41,6 +41,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         insert into sys_feed
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="feedUrl != null and feedUrl != ''">feed_url,</if>
+            <if test="feedLink != null and feedLink != ''">feed_link,</if>
             <if test="feedTitle != null">feed_title,</if>
             <if test="feedDescription != null">feed_description,</if>
             <if test="feedLogo != null">feed_logo,</if>
@@ -50,6 +51,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="feedUrl != null and feedUrl != ''">#{feedUrl},</if>
+            <if test="feedLink != null and feedLink != ''">#{feedLink},</if>
             <if test="feedTitle != null">#{feedTitle},</if>
             <if test="feedDescription != null">#{feedDescription},</if>
             <if test="feedLogo != null">#{feedLogo},</if>
