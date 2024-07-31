@@ -14,7 +14,7 @@ import com.ruoyi.system.domain.SysFeed;
 public interface ISysFeedService extends IService<SysFeed>
 {
 
-    List<SysFeed> listByPageSubscriptions(Integer page, Integer pageSize);
+    List<SysFeed> listByPageSubscriptions();
 
     SysFeed analysisByUrl(String url);
 

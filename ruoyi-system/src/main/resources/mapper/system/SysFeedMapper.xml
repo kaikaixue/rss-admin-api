@@ -37,6 +37,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where feed_id = #{feedId}
     </select>
 
+    <select id="listByPageSubscriptions" resultMap="SysFeedResult" parameterType="Long">
+        select sf.feed_id,
+               feed_link,
+               feed_url,
+               feed_title,
+               feed_description,
+               feed_logo,
+               sf.created_at,
+               sf.updated_at,
+               is_recommended
+        from sys_feed as sf
+           , sys_subscriptions as ss
+        where ss.user_id = #{userId} and sf.feed_id = ss.feed_id
+    </select>
+
     <insert id="insertSysFeed" parameterType="SysFeed" useGeneratedKeys="true" keyProperty="feedId">
         insert into sys_feed
         <trim prefix="(" suffix=")" suffixOverrides=",">

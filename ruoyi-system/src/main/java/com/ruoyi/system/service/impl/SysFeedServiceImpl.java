@@ -35,6 +35,8 @@ public class SysFeedServiceImpl extends ServiceImpl<SysFeedMapper, SysFeed> impl
     @Resource
     private SysFeedMapper sysFeedMapper;
 
+
+
     @Override
     public SysFeed analysisByUrl(String url) {
         QueryWrapper<SysFeed> sysFeedQueryWrapper = new QueryWrapper<>();
@@ -84,12 +86,10 @@ public class SysFeedServiceImpl extends ServiceImpl<SysFeedMapper, SysFeed> impl
     }
 
     @Override
-    public List<SysFeed> listByPageSubscriptions(Integer page, Integer pageSize) {
+    public List<SysFeed> listByPageSubscriptions() {
         AppLoginUser appLoginUser = SecurityUtils.getAppLoginUser();
-        Page<SysFeed> rowPage = new Page<>(page, pageSize);
-        LambdaQueryWrapper<SysFeed> queryWrapper = new LambdaQueryWrapper<>();
-//        queryWrapper.eq(SysSubscriptions::getUserId, appLoginUser.getUserId())
-        return null;
+        List<SysFeed> list = sysFeedMapper.listByPageSubscriptions(appLoginUser.getUserId());
+        return list;
     }
 
 

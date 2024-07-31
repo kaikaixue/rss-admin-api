@@ -13,6 +13,9 @@ import com.ruoyi.system.domain.SysFeed;
  */
 public interface SysFeedMapper extends BaseMapper<SysFeed>
 {
+
+    List<SysFeed> listByPageSubscriptions(Long userId);
+
     /**
      * 查询订阅源
      * 
